@@ -1,0 +1,70 @@
+FLOWCHART: COMO FAZER PUSH DO SEU PROJETO PARA GITHUB
+═══════════════════════════════════════════════════════
+
+                                 ┌─────────────────────────────┐
+                                 │   PROJETO PRONTO NO GIT     │
+                                 │  (4 commits + documentação) │
+                                 └────────────┬────────────────┘
+                                              │
+                                              ▼
+                                 ┌─────────────────────────────┐
+                                 │  GERAR TOKEN NO GITHUB      │
+                                 │  https://bit.ly/gh-token    │
+                                 │                             │
+                                 │  1. Name: API-Tarefas-Push  │
+                                 │  2. Scopes: ✓ repo          │
+                                 │  3. Copie: ghp_xxxxx        │
+                                 └────────────┬────────────────┘
+                                              │
+                                ┌─────────────┴─────────────┐
+                                │                           │
+                                ▼                           ▼
+                   ┌──────────────────────┐   ┌──────────────────────┐
+                   │   OPÇÃO A (RÁPIDO)   │   │   OPÇÃO B (SEGURO)   │
+                   │  Script Automático   │   │ Credential Manager   │
+                   │                      │   │                      │
+                   │ .\push-with-token... │   │ git push -u origin   │
+                   │                      │   │ main                 │
+                   │ Cole token quando    │   │                      │
+                   │ pedir                │   │ Digite credenciais   │
+                   │                      │   │ quando Windows pedir │
+                   └──────────┬───────────┘   └──────────┬───────────┘
+                              │                          │
+                              └──────────────┬───────────┘
+                                            │
+                                            ▼
+                                ┌─────────────────────────────┐
+                                │   PUSH EXECUTADO COM SUCESSO│
+                                │                             │
+                                │  ✅ Projeto no GitHub:      │
+                                │  github.com/itzbrunin/      │
+                                │  API-de-Gerenciamento...    │
+                                └─────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+RESUMO RÁPIDO:
+═══════════════════════════════════════════════════════════════════════════════
+
+Passo 1: Gerar Token em https://github.com/settings/tokens/new
+         └─ Copie o token (ghp_xxxxx...)
+
+Passo 2: Escolha uma opção
+         
+         A) Script automático:
+            .\push-with-token.ps1
+            
+         B) Credential Manager (RECOMENDADO):
+            git push -u origin main
+            
+         C) Comando manual:
+            $token = "ghp_xxxxx"
+            git remote set-url origin "https://itzbrunin:$token@github.com/itzbrunin/API-de-Gerenciamento-de-Tarefas.git"
+            git push -u origin main
+
+Passo 3: Verificar resultado
+         https://github.com/itzbrunin/API-de-Gerenciamento-de-Tarefas
+
+═══════════════════════════════════════════════════════════════════════════════
+TEMPO ESTIMADO: 2 MINUTOS
+═══════════════════════════════════════════════════════════════════════════════
