@@ -1,15 +1,8 @@
-# Virtual Environment
-venv/
-env/
-ENV/
-
-# Python cache
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -27,26 +20,23 @@ wheels/
 .installed.cfg
 *.egg
 
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# Environment variables
-.env
-.env.local
-.env.*.local
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 
-# OS
-.DS_Store
-Thumbs.db
+# Database
+*.db
+*.sqlite
+*.sqlite3
 
-# Logs
-*.log
+# Environment files
+.env
+.env.local
