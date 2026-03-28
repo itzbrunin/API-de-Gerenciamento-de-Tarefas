@@ -22,8 +22,16 @@ task_api/
 ## Instalação
 
 ### 1. Clonar o repositório
+
+**Com SSH (mais rápido):**
 ```bash
 git clone git@github.com:itzbrunin/API-de-Gerenciamento-de-Tarefas.git
+cd API-de-Gerenciamento-de-Tarefas
+```
+
+**Com HTTPS (se SSH não funcionar):**
+```bash
+git clone https://github.com/itzbrunin/API-de-Gerenciamento-de-Tarefas.git
 cd API-de-Gerenciamento-de-Tarefas
 ```
 
