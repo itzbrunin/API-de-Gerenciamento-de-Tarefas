@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app import models, schemas, database
+from app import models, schemas, database, auth
 
 router = APIRouter()
 
@@ -11,41 +11,30 @@ def get_db():
     finally:
         db.close()
 
-# CREATE
-@router.post("/tasks")
-def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
-    
-    # Cria uma nova tarefa no banco de dados
-    # Parâmetros:
-    # -task: dados da tarefa enviados pelo usuário
-    # - db: sessão do banco de dados
-    # Retorna: - A tarefa criada
-    
-    new_task = models.Task(title=task.title)
-    db.add(new_task)
+# Registrar Usuario
+@router.post("/register")
+def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    # Verifica se o usuário já existe
+    existing_user = db.query(models.User).filter(models.User.username == user.username).first()
+
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Usuário já existe")
+
+    # Criptografa a senha do usuário
+    hashed = auth.hash_password(user.password)
+    # Cria um novo usuário 
+    new_user = models.User(username=user.username, password=hashed)
+    db.add(new_user)
     db.commit()
-    db.refresh(new_task)
-    return new_task
-
-# READ
-@router.get("/tasks")
-def list_tasks(db: Session = Depends(get_db)):
-    return db.query(models.Task).all()
-
-# UPDATE
-@router.put("/tasks/{task_id}")
-def update_task(task_id: int, db: Session = Depends(get_db)):
-    task = db.query(models.Task).get(task_id)
-    if task:
-        task.completed = True
-        db.commit()
-    return task
-
-# DELETE
-@router.delete("/tasks/{task_id}")
-def delete_task(task_id: int, db: Session = Depends(get_db)):
-    task = db.query(models.Task).get(task_id)
-    if task:
-        db.delete(task)
-        db.commit()
-    return {"msg": "Deletado"}
+    return {"msg": "Usuário criado "}
+ 
+# LOGIN
+@router.post("/login")
+def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
+    db_user = db.query(models.User).filter(models.User.username == user.username).first()
+    
+    if not db_user or not auth.verify_password(user.password, db_user.password):
+        raise HTTPException(status_code=400, detail="Credenciais inválidas")
+    
+    token = auth.create_token(data={"sub": db_user.username})
+    return {"access_token": token}  
