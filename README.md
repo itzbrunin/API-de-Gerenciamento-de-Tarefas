@@ -51,7 +51,7 @@ Cada usuário possui suas próprias tarefas, garantindo segurança e isolamento 
 ### 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/SEU_USUARIO/task-api.git
+git clone https://github.com/itzbrunin/API-de-Gerenciamento-de-Tarefas.git
 cd task-api
 ```
 
